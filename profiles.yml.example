@@ -1,4 +1,4 @@
-shopflow_analytics:
+dbt_databricks:
   target: dev
   outputs:
     dev:
