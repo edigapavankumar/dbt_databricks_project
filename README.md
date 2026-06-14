@@ -168,7 +168,3 @@ databricks bundle run dbtXdatabricks_shopflow -t dev   # or -t prod
 ```
 
 Legacy **`databricks/job_dbt_pipeline.json`** is kept for reference; the canonical definition is the bundle in `resources/`.
-
-## License
-
-See [LICENSE](LICENSE).
