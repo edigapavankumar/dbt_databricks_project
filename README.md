@@ -11,6 +11,7 @@ End-to-end data pipeline for an e-commerce analytics layer: **orders**, **custom
 - **Gold** (`gold` schema): Marts — `fct_orders`, `fct_order_items`, `dim_products`; **`scd_customers`** (Type 2 SCD — the only customer table, attributes only, no order-derived fields); and **exposures** (who uses the data).
 
 **Concepts included (beginner-friendly):**
+
 - **Incremental models**: `fct_orders` and `fct_order_items` use `merge` so only new/changed data is processed each run.
 - **Slowly changing dimension (Type 2)**: `scd_customers` snapshot tracks customer history; use `dbt_valid_from` / `dbt_valid_to` for point-in-time queries.
 - **Exposures**: Link gold models to dashboards and consumers (CEO dashboard, product analytics).
@@ -108,10 +109,10 @@ macros/             # generate_schema_name (schema as-is, no prefix/postfix)
 
 Two workflows deploy the **Databricks Asset Bundle** by branch:
 
-| Branch | Workflow                    | Target | GitHub environment |
-|--------|-----------------------------|--------|---------------------|
-| **dev**  | `.github/workflows/deploy-bundle-dev.yml`  | `dev`  | `dev`  |
-| **main** | `.github/workflows/deploy-bundle.yml`      | `prod` | `prod` |
+| Branch   | Workflow                                  | Target | GitHub environment |
+| -------- | ----------------------------------------- | ------ | ------------------ |
+| **dev**  | `.github/workflows/deploy-bundle-dev.yml` | `dev`  | `dev`              |
+| **main** | `.github/workflows/deploy-bundle.yml`     | `prod` | `prod`             |
 
 - **Push to `dev`** → validate and deploy to **dev** (`databricks bundle deploy -t dev`). Job and files go to the dev bundle path in the workspace.
 - **Push to `main`** → validate and deploy to **prod** (`databricks bundle deploy -t prod`).
@@ -132,15 +133,15 @@ Override `warehouse_id`, `catalog`, or `dbt_schema` in `databricks.yml` or via `
 
 If you add a workflow (e.g. `.github/workflows/dbt.yml`) that runs dbt on PRs, use these secrets as needed:
 
-| Secret                 | Description              |
-|------------------------|--------------------------|
-| `DATABRICKS_HTTP_PATH` | SQL Warehouse HTTP path  |
-| `DBT_SCHEMA`           | Schema for CI runs       |
-| `DATABRICKS_CATALOG`   | Unity Catalog name       |
+| Secret                 | Description             |
+| ---------------------- | ----------------------- |
+| `DATABRICKS_HTTP_PATH` | SQL Warehouse HTTP path |
+| `DBT_SCHEMA`           | Schema for CI runs      |
+| `DATABRICKS_CATALOG`   | Unity Catalog name      |
 
 ## Interview talking points
 
-When asked *"Walk me through a data project you've built"* or *"What's in your dbt project?"*, you can say:
+When asked _"Walk me through a data project you've built"_ or _"What's in your dbt project?"_, you can say:
 
 - **Architecture:** "I built a medallion pipeline on Databricks: bronze for raw data, silver for staging and intermediate models, gold for fact and dimension tables. Schema names are clean—no prefix or postfix."
 - **Facts & dimensions:** "Gold has two fact tables—`fct_orders` (order grain) and `fct_order_items` (line grain)—and one dimension, `dim_products`. Customers are in `scd_customers` only (Type 2 SCD, attributes only, no order aggregates)."
@@ -171,6 +172,3 @@ Legacy **`databricks/job_dbt_pipeline.json`** is kept for reference; the canonic
 ## License
 
 See [LICENSE](LICENSE).
-#   d b t _ d a t a b r i c k s _ p r o j e c t  
- #   a s d f a  
- 
